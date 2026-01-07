@@ -1,11 +1,18 @@
 package vn.hoidanit.laptopshop.domain;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
@@ -17,8 +24,34 @@ public class User {
     private String address;
     private String phone;
 
+    private String avatar;
+
+    @ManyToOne
+    Role role;
+
+    @JoinColumn(name = "role_id")
+    //role id
     public long getId() {
         return id;
+    }
+
+    @OneToMany(mappedBy = "user")
+    List<Order> orders;
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     public String getEmail() {
@@ -65,6 +98,14 @@ public class User {
         this.phone = phone;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -75,6 +116,7 @@ public class User {
         sb.append(", fullName=").append(fullName);
         sb.append(", address=").append(address);
         sb.append(", phone=").append(phone);
+        sb.append(", avatar=").append(avatar);
         sb.append(']');
         return sb.toString();
     }
