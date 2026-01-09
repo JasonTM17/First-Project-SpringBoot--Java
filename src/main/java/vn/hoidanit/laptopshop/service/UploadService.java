@@ -15,13 +15,19 @@ public class UploadService {
 
     private final ServletContext servletContext;
 
-    public UploadService(ServletContext servletContext) {
+    private final ProductService productService;
+
+    public UploadService(ServletContext servletContext, ProductService productService) {
         this.servletContext = servletContext;
+        this.productService = productService;
     }
 
     public String handleSaveUploadFile(MultipartFile[] files, String targetFolder) {
         String rootPath = this.servletContext.getRealPath("/resources/images");
         String finalName = "";
+        if (files == null || files.length == 0) {
+            return "";
+        }
         try {
             File dir = new File(rootPath + File.separator + targetFolder);
 
