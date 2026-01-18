@@ -46,6 +46,14 @@
                                                             placeholder="Password" name="password" />
                                                         <label for="inputPassword">Password</label>
                                                     </div>
+                                                    <div class="form-check mb-3">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            name="remember-me" id="rememberMe">
+                                                        <label class="form-check-label" for="rememberMe">
+                                                            Remember me
+                                                        </label>
+                                                    </div>
+
                                                     <div><input type="hidden" name="${_csrf.parameterName}"
                                                             value="${_csrf.token}" />
                                                     </div>
