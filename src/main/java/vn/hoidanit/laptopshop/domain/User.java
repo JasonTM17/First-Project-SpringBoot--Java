@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -42,16 +43,19 @@ public class User {
     private String avatar;
 
     @ManyToOne
-    Role role;
-
     @JoinColumn(name = "role_id")
+    private Role role;
+
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
+
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
+
     //role id
     public long getId() {
         return id;
     }
-
-    @OneToMany(mappedBy = "user")
-    List<Order> orders;
 
     public Role getRole() {
         return role;
@@ -134,6 +138,14 @@ public class User {
         sb.append(", avatar=").append(avatar);
         sb.append(']');
         return sb.toString();
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
 }

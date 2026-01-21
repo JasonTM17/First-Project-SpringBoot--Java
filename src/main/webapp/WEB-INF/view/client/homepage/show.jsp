@@ -37,25 +37,14 @@
                 </head>
 
                 <body>
-
                     <!-- Spinner Start -->
                     <div id="spinner"
                         class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
                         <div class="spinner-grow text-primary" role="status"></div>
                     </div>
                     <!-- Spinner End -->
-
                     <jsp:include page="../layout/header.jsp" />
-
-
-
-
-
                     <jsp:include page="../layout/banner.jsp" />
-
-
-
-
                     <!-- Fruits Shop Start-->
                     <div class="container-fluid fruite py-5">
                         <div class="container py-5">
@@ -97,16 +86,26 @@
                                                                         </a>
                                                                     </h4>
                                                                     <p style="font-size: 13px;">${product.shortDesc}</p>
-                                                                    <div class="d-flex flex-lg-wrap">
+                                                                    <div
+                                                                        class="d-flex flex-lg-wrap justify-content-center">
                                                                         <p style="font-size: 15px; text-align: center; width: 100%;"
                                                                             class="text-dark fw-bold mb-3">
                                                                             <fmt:formatNumber type="number"
                                                                                 value="${product.price}" /> đ
                                                                         </p>
-                                                                        <a href="#"
-                                                                            class="mx auto btn border border-secondary rounded-pill px-3 text-primary"><i
-                                                                                class="fa fa-shopping-bag me-2 text-primary"></i>
-                                                                            Add to cart</a>
+                                                                        <form
+                                                                            action="/add-product-to-cart/${product.id}"
+                                                                            method="post">
+                                                                            <input type="hidden"
+                                                                                name="${_csrf.parameterName}"
+                                                                                value="${_csrf.token}" />
+                                                                            <button
+                                                                                class="mx-auto btn border border-secondary rounded">
+                                                                                <i
+                                                                                    class="fa fa-shopping-bag me-2 text-primary"></i>
+                                                                                Add to cart
+                                                                            </button>
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -123,10 +122,7 @@
                     <!-- Fruits Shop End-->
 
                     <jsp:include page="../layout/feature.jsp" />
-
                     <jsp:include page="../layout/footer.jsp" />
-
-
                     <!-- Back to Top -->
                     <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i
                             class="fa fa-arrow-up"></i></a>
