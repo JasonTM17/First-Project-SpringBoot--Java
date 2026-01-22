@@ -2,53 +2,33 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
             <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
                 <!DOCTYPE html>
                 <html lang="en">
 
                 <head>
                     <meta charset="utf-8">
-                    <title>${product.name} - Laptopshop</title>
+                    <title>Checkout - Laptopshop</title>
                     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-                    <meta content="" name="keywords">
-                    <meta content="" name="description">
 
-                    <!-- Google Web Fonts -->
+                    <!-- Fonts & CSS -->
                     <link rel="preconnect" href="https://fonts.googleapis.com">
                     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
                     <link
                         href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap"
                         rel="stylesheet">
 
-                    <!-- Icon Font Stylesheet -->
                     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
                     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
                         rel="stylesheet">
-
-                    <!-- Libraries Stylesheet -->
-                    <link href="/client/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
-                    <link href="/client/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-
-
-                    <!-- Customized Bootstrap Stylesheet -->
                     <link href="/client/css/bootstrap.min.css" rel="stylesheet">
-
-                    <!-- Template Stylesheet -->
                     <link href="/client/css/style.css" rel="stylesheet">
                 </head>
 
                 <body>
 
-                    <!-- Spinner Start -->
-                    <div id="spinner"
-                        class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
-                        <div class="spinner-grow text-primary" role="status"></div>
-                    </div>
-                    <!-- Spinner End -->
-
-
                     <jsp:include page="../layout/header.jsp" />
 
-                    <!-- Cart Page Start -->
                     <div class="container-fluid py-5">
                         <div class="container py-5">
 
@@ -106,76 +86,87 @@
                                 </table>
                             </div>
 
-                            <!-- CHECKOUT CONTENT -->
-                            <div class="row g-5">
 
-                                <!-- LEFT: RECEIVER INFO -->
-                                <div class="col-md-7">
-                                    <h4 class="mb-4">Thông Tin Người Nhận</h4>
+                            <c:if test="${not empty cartDetails}">
 
-                                    <form:form action="/place-order" method="post" modelAttribute="cart">
-                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                <form:form action="/place-order" method="post" modelAttribute="cart">
+                                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
-                                        <div class="mb-3">
-                                            <label class="form-label">Tên người nhận</label>
-                                            <input class="form-control" name="receiverName" required />
+                                    <div class="row g-5">
+
+
+                                        <div class="col-md-7">
+                                            <h4 class="mb-4">Thông Tin Người Nhận</h4>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Tên người nhận</label>
+                                                <input class="form-control" name="receiverName" required />
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Địa chỉ người nhận</label>
+                                                <input class="form-control" name="receiverAddress" required />
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label class="form-label">Số điện thoại</label>
+                                                <input class="form-control" name="receiverPhone" required />
+                                            </div>
+
+                                            <!-- hidden cartDetails -->
+                                            <c:forEach var="cd" items="${cart.cartDetails}" varStatus="st">
+                                                <form:input type="hidden" path="cartDetails[${st.index}].id"
+                                                    value="${cd.id}" />
+
+                                                <form:input type="hidden" path="cartDetails[${st.index}].quantity"
+                                                    value="${cd.quantity}" />
+                                            </c:forEach>
+
+                                            <div class="mt-3">
+                                                <i class="fas fa-arrow-left"></i>
+                                                <a href="/cart">Quay lại giỏ hàng</a>
+                                            </div>
                                         </div>
 
-                                        <div class="mb-3">
-                                            <label class="form-label">Địa chỉ người nhận</label>
-                                            <input class="form-control" name="receiverAddress" required />
+                                        <!-- RIGHT: Thông tin thanh toán -->
+                                        <div class="col-md-5">
+                                            <div class="bg-light rounded p-4">
+                                                <h4 class="mb-4">Thông Tin Thanh Toán</h4>
+
+                                                <div class="d-flex justify-content-between mb-3">
+                                                    <span>Phí vận chuyển</span>
+                                                    <span>0 đ</span>
+                                                </div>
+
+                                                <div class="d-flex justify-content-between mb-3">
+                                                    <span>Hình thức</span>
+                                                    <span>Thanh toán khi nhận hàng (COD)</span>
+                                                </div>
+
+                                                <hr>
+
+                                                <div class="d-flex justify-content-between fw-bold fs-5 mb-4">
+                                                    <span>Tổng số tiền</span>
+                                                    <span>
+                                                        <fmt:formatNumber value="${totalPrice}" type="number" /> đ
+                                                    </span>
+                                                </div>
+
+
+                                                <button type="submit"
+                                                    class="btn btn-success rounded-pill px-5 py-2 w-100">
+                                                    XÁC NHẬN THANH TOÁN
+                                                </button>
+                                            </div>
                                         </div>
 
-                                        <div class="mb-3">
-                                            <label class="form-label">Số điện thoại</label>
-                                            <input class="form-control" name="receiverPhone" required />
-                                        </div>
-
-                                        <!-- Hidden cartDetails -->
-                                        <c:forEach var="cd" items="${cart.cartDetails}" varStatus="st">
-                                            <form:input type="hidden" path="cartDetails[${st.index}].id"
-                                                value="${cd.id}" />
-                                            <form:input type="hidden" path="cartDetails[${st.index}].quantity"
-                                                value="${cd.quantity}" />
-                                        </c:forEach>
-
-                                        <button class="btn btn-primary px-4 py-2 mt-3">
-                                            Xác nhận đặt hàng
-                                        </button>
-                                    </form:form>
-                                </div>
-
-                                <!-- RIGHT: PAYMENT INFO -->
-                                <div class="col-md-5">
-                                    <div class="bg-light rounded p-4">
-                                        <h4 class="mb-4">Thông Tin Thanh Toán</h4>
-
-                                        <div class="d-flex justify-content-between mb-3">
-                                            <span>Phí vận chuyển</span>
-                                            <span>0 đ</span>
-                                        </div>
-
-                                        <div class="d-flex justify-content-between mb-3">
-                                            <span>Hình thức</span>
-                                            <span>Thanh toán khi nhận hàng (COD)</span>
-                                        </div>
-
-                                        <hr>
-
-                                        <div class="d-flex justify-content-between fw-bold fs-5">
-                                            <span>Tổng số tiền</span>
-                                            <span>
-                                                <fmt:formatNumber value="${totalPrice}" type="number" /> đ
-                                            </span>
-                                        </div>
                                     </div>
-                                </div>
+                                </form:form>
 
-                            </div>
+                            </c:if>
 
                         </div>
                     </div>
-                    <!-- Cart Page End -->
 
 
                     <jsp:include page="../layout/footer.jsp" />

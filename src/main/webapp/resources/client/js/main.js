@@ -160,8 +160,8 @@
     $('.quantity button').on('click', function () {
         let change = 0;
 
-        const button = $(this);
-        const oldValue = button.parent().parent().find('input').val();
+        var button = $(this);
+        var oldValue = button.parent().parent().find('input').val();
         let newVal;
 
         if (button.hasClass('btn-plus')) {
@@ -191,7 +191,7 @@
 
         // update item price
         const priceElement = $(`p[data-cart-detail-id='${id}']`);
-        if (priceElement.length) {
+        if (priceElement) {
             const newPrice = (+price) * newVal;
             priceElement.text(formatCurrency(newPrice.toFixed(2)) + " đ");
         }
@@ -211,7 +211,7 @@
             // reset change
             change = 0;
             // update all total price elements
-            totalPriceElement.each(function (index, element) {
+            totalPriceElement?.each(function (index, element) {
                 // update text
                 $(totalPriceElement[index]).text(formatCurrency(newTotal.toFixed(2)) + " đ");
 
