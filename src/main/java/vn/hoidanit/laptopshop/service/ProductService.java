@@ -166,7 +166,7 @@ public class ProductService {
     }
 
     public Cart fetchByUser(User user) {
-        return this.cartRepository.findByUser(user);
+        return this.cartRepository.findByUserId(user.getId());
     }
 
     public void handleRemoveCartDetail(long cartDetailId, HttpSession session) {
@@ -210,8 +210,6 @@ public class ProductService {
         if (cart != null) {
             List<CartDetail> cartDetails = cart.getCartDetails();
             if (cartDetails != null) {
-
-                // create order
                 Order order = new Order();
                 order.setUser(user);
                 order.setReceiverName(receiverName);
@@ -221,7 +219,7 @@ public class ProductService {
 
                 double sum = 0;
                 for (CartDetail cd : cartDetails) {
-                    sum += cd.getPrice();
+                    sum += cd.getPrice() * cd.getQuantity();
                 }
                 order.setTotalPrice(sum);
                 order = this.orderRepository.save(order);
@@ -250,24 +248,6 @@ public class ProductService {
 
     }
 
-    @SuppressWarnings("unchecked")
-    public void handleAddProductToCart(String email, Long productId, long quantity) {
 
-        if (email == null) {
-            throw new RuntimeException("User not logged in");
-        }
-        Map<Long, Long> cart = (Map<Long, Long>) session.getAttribute("cart");
-
-        if (cart == null) {
-            cart = new HashMap<>();
-        }
-
-        cart.put(productId, cart.getOrDefault(productId, 0L) + quantity);
-
-        session.setAttribute("cart", cart);
-
-        int sum = cart.values().stream().mapToInt(Long::intValue).sum();
-        session.setAttribute("sum", sum);
-    }
 
 }
