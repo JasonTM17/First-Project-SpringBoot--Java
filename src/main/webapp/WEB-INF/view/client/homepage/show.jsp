@@ -87,8 +87,8 @@
                                                                 <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
                                                                     style="top: 10px; left: 10px;">Laptop</div>
                                                                 <div
-                                                                    class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                                    <h4 style="font-size: 15px;">
+                                                                    class="product-card-body p-4 border border-secondary border-top-0 rounded-bottom">
+                                                                    <h4 class="product-title" style="font-size: 15px;">
                                                                         <a href="/product/${product.id}">
                                                                             ${product.name}
                                                                         </a>
@@ -97,7 +97,7 @@
                                                                     <div
                                                                         class="d-flex flex-lg-wrap justify-content-center flex-column">
                                                                         <p style="font-size: 15px; text-align: center; width: 100%;"
-                                                                            class="text-dark fw-bold mb-3">
+                                                                            class="product-price text-dark fw-bold mb-3">
                                                                             <fmt:formatNumber type="number"
                                                                                 value="${product.price}" /> đ
                                                                         </p>
