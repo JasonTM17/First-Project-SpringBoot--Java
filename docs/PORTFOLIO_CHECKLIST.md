@@ -60,7 +60,7 @@ curl.exe http://localhost:8081/robots.txt
 
 ## Final Presentation
 
-- Use `docs/screenshots/github-social-preview.png` as the social preview image.
+- Use `docs/screenshots/github-social-preview.jpg` as the social preview image.
 - Lead with the customer workflow and admin dashboard.
 - Open `/about` to show the product story, service policies, release status, and reviewer checklist.
 - Reference `RELEASE_NOTES.md` to make the release scope and known limits explicit.

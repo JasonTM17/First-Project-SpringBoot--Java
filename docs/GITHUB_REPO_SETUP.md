@@ -39,7 +39,7 @@ This removes the unprotected-branch warning while still keeping the repo practic
 - README first viewport should show the title, badges, one-line pitch, demo accounts, and quick reviewer path.
 - Long docs belong in collapsed details or linked markdown files.
 - Use `docs/screenshots/github-hero.png` as the README hero.
-- Use `docs/screenshots/github-social-preview.png` as the GitHub social preview image.
+- Use `docs/screenshots/github-social-preview.jpg` as the GitHub social preview image. It is exported under 1 MB for GitHub's upload limit.
 - Keep the Website field blank until a deployed app is available.
 
 ## Container Package
@@ -111,7 +111,7 @@ This release polishes Laptopshop as a recruiter-first Spring Boot MVC portfolio:
 - GitHub Packages shows the `laptopshop-spring-boot-mvc` container package.
 - README hero is not clipped in GitHub dark or light mode.
 - README screenshot gallery loads without broken images.
-- Social preview image is uploaded in repository settings.
+- Social preview image is uploaded in repository settings from `docs/screenshots/github-social-preview.jpg`.
 - Open pull request count is `0`.
 - Latest `master` Actions run is green.
 

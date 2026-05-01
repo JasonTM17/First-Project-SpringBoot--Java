@@ -8,7 +8,7 @@ This release focuses on the GitHub portfolio presentation: a recruiter-first REA
 
 - README first viewport redesigned around quick review: pitch, badges, demo accounts, reviewer route, quick start, screenshots, and collapsed deep docs.
 - GitHub hero replaced with a shorter SVG that avoids clipped text in GitHub dark/light mode.
-- New `docs/screenshots/github-social-preview.png` asset prepared for repository social preview.
+- New imagegen-based `docs/screenshots/github-social-preview.jpg` asset prepared for repository social preview under GitHub's 1 MB upload limit.
 - Repository identity standardized as `laptopshop-spring-boot-mvc`.
 - GitHub Container Registry publishing added for `ghcr.io/jasontm17/laptopshop-spring-boot-mvc`.
 - Release/checklist docs updated for `v1.0.1 Portfolio Polish`.
@@ -33,7 +33,7 @@ GitHub verification targets:
 ### Known Limits
 
 - Website remains blank until a real deployed demo exists.
-- Social preview upload is a GitHub repository setting; the source image is tracked in `docs/screenshots/github-social-preview.png`.
+- Social preview upload is a GitHub repository setting; the upload-ready image is tracked in `docs/screenshots/github-social-preview.jpg`.
 
 ## v1.0.0 Portfolio Showcase - 2026-04-30
 
