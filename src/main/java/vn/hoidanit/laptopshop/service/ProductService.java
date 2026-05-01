@@ -97,7 +97,7 @@ public class ProductService {
         if (name.isEmpty() && target.isEmpty() && factory.isEmpty() && price.isEmpty()) {
             return this.productRepository.findAll(page);
         }
-        Specification<Product> combinedSpec = Specification.where(null);
+        Specification<Product> combinedSpec = Specification.unrestricted();
 
         if (name.isPresent()) {
             String keyword = name.get().trim();
@@ -125,7 +125,7 @@ public class ProductService {
     }
 
     public Specification<Product> buildPriceSpecification(List<String> price) {
-        Specification<Product> combinedSpec = Specification.where(null);
+        Specification<Product> combinedSpec = Specification.unrestricted();
         for (String p : price) {
             double min = 0;
             double max = 0;
@@ -243,6 +243,7 @@ public class ProductService {
                 this.cartRepository.save(currentCart);
             } else {
                 // delete cart (sum = 1)
+                detachCartFromUser(currentCart);
                 this.cartRepository.deleteById(currentCart.getId());
                 setCartCount(session, 0);
             }
@@ -291,7 +292,12 @@ public class ProductService {
     @Transactional
     public boolean handlePlaceOrder(User user, HttpSession session,
             String receiverName, String receiverAddress, String receiverPhone, String paymentMethod) {
-        Cart cart = this.cartRepository.findByUser(user);
+        User managedUser = user == null ? null : this.userService.getUserById(user.getId());
+        if (managedUser == null) {
+            throw new IllegalArgumentException("Không tìm thấy tài khoản đặt hàng");
+        }
+
+        Cart cart = this.cartRepository.findByUser(managedUser);
         if (cart == null || cart.getCartDetails() == null || cart.getCartDetails().isEmpty()) {
             return false;
         }
@@ -315,7 +321,7 @@ public class ProductService {
         }
 
         Order order = new Order();
-        order.setUser(user);
+        order.setUser(managedUser);
         order.setReceiverName(receiverName);
         order.setReceiverAddress(receiverAddress);
         order.setReceiverPhone(receiverPhone);
@@ -343,9 +349,21 @@ public class ProductService {
         for (CartDetail cd : cartDetails) {
             this.cartDetailRepository.deleteById(cd.getId());
         }
+        detachCartFromUser(cart);
         this.cartRepository.deleteById(cart.getId());
         setCartCount(session, 0);
         return true;
+    }
+
+    private void detachCartFromUser(Cart cart) {
+        if (cart == null) {
+            return;
+        }
+        User cartUser = cart.getUser();
+        if (cartUser != null && cartUser.getCart() == cart) {
+            cartUser.setCart(null);
+        }
+        cart.setUser(null);
     }
 
     private void setCartCount(HttpSession session, int count) {

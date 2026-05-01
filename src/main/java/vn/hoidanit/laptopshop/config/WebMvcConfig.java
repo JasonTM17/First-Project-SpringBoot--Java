@@ -39,11 +39,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/images/**").addResourceLocations("/resources/images/").setCacheControl(staticCache);
         registry.addResourceHandler("/client/**").addResourceLocations("/resources/client/").setCacheControl(staticCache);
         registry.addResourceHandler("/site.webmanifest")
-                .addResourceLocations("/site.webmanifest", "/resources/site.webmanifest");
-        registry.addResourceHandler("/robots.txt")
-                .addResourceLocations("/robots.txt", "/resources/robots.txt");
-        registry.addResourceHandler("/sitemap.xml")
-                .addResourceLocations("/sitemap.xml", "/resources/sitemap.xml");
+                .addResourceLocations("/", "/resources/");
     }
 
 }

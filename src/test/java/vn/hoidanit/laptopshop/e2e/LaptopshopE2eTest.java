@@ -30,6 +30,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.MockMvc;
 
+import jakarta.persistence.EntityManager;
 import vn.hoidanit.laptopshop.domain.Order;
 import vn.hoidanit.laptopshop.domain.Product;
 import vn.hoidanit.laptopshop.domain.Role;
@@ -73,19 +74,23 @@ class LaptopshopE2eTest {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    EntityManager entityManager;
+
     Product appleLaptop;
     Product dellLaptop;
     User customer;
 
     @BeforeEach
     void setUp() {
-        orderDetailRepository.deleteAll();
-        orderRepository.deleteAll();
-        cartDetailRepository.deleteAll();
-        cartRepository.deleteAll();
-        productRepository.deleteAll();
-        userRepository.deleteAll();
-        roleRepository.deleteAll();
+        orderDetailRepository.deleteAllInBatch();
+        orderRepository.deleteAllInBatch();
+        cartDetailRepository.deleteAllInBatch();
+        cartRepository.deleteAllInBatch();
+        productRepository.deleteAllInBatch();
+        userRepository.deleteAllInBatch();
+        roleRepository.deleteAllInBatch();
+        entityManager.clear();
 
         Role userRole = roleRepository.save(role("USER", "End user"));
         roleRepository.save(role("ADMIN", "Administrator"));

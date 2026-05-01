@@ -123,6 +123,7 @@ class ProductServiceTest {
         cart.setUser(user);
         cart.setCartDetails(List.of());
 
+        when(userService.getUserById(1)).thenReturn(user);
         when(cartRepository.findByUser(user)).thenReturn(cart);
 
         boolean placed = productService.handlePlaceOrder(user, mock(HttpSession.class), "A", "Address", "0900000000", "COD");
@@ -153,6 +154,7 @@ class ProductServiceTest {
         detail.setQuantity(2);
         cart.setCartDetails(List.of(detail));
 
+        when(userService.getUserById(1)).thenReturn(user);
         when(cartRepository.findByUser(user)).thenReturn(cart);
         when(productRepository.findById(10L)).thenReturn(Optional.of(product));
         when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> invocation.getArgument(0));

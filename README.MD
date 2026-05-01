@@ -70,7 +70,7 @@ GitHub metadata/release setup: [docs/GITHUB_REPO_SETUP.md](docs/GITHUB_REPO_SETU
 ## Tech Stack
 
 - Java 17
-- Spring Boot 3.2.2
+- Spring Boot 3.5.14
 - Spring MVC, JSP, JSTL
 - Spring Security
 - Spring Data JPA, Hibernate
