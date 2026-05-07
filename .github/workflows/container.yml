@@ -37,7 +37,7 @@ jobs:
 
       - name: Extract Docker Hub metadata
         id: meta-dockerhub
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: ${{ env.DOCKERHUB_IMAGE }}
           tags: |
